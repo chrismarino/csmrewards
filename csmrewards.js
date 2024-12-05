@@ -2,6 +2,7 @@
 const axios = require("axios");
 const dotenv = require("dotenv");
 const { getCumulativeFeeShares } = require("./lib/getCumulativeFeeShares");
+const { getBondShares } = require("./lib/getBondShares");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -19,9 +20,13 @@ async function main() {
     process.exit(1);
   }
 
-  const result = await getCumulativeFeeShares(nodeOperatorID);
-  if (result) {
-    console.log(`Returned data:`, result);
+  const cumulativeFeeShares = await getCumulativeFeeShares(nodeOperatorID);
+  if (cumulativeFeeShares) {
+    console.log(`Cumulative Fee Shares:`, cumulativeFeeShares);
+  }
+  const bondShares = await getBondShares(nodeOperatorID);
+  if (bondShares) {
+    console.log(`Total Bond Shares:`, bondShares);
   }
 }
 
