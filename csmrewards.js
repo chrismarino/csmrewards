@@ -2,7 +2,11 @@
 const axios = require("axios");
 const dotenv = require("dotenv");
 const { getCumulativeFeeShares } = require("./lib/getCumulativeFeeShares");
-const { getBondShares } = require("./lib/getBondShares");
+const { getDistributedShares } = require("./lib/getDistributedShares");
+const { getPooledEthShares } = require("./lib/getPooledEthShares");
+const { getTotalBond } = require("./lib/getTotalBond");
+const { getClaimableBondShares } = require("./lib/getClaimableBondShares");
+const getEtherscanData = require("./lib/getEtherscanData");
 
 // Load environment variables from .env file
 dotenv.config();
@@ -19,15 +23,23 @@ async function main() {
     console.error("Please provide a nodeOperatorID as a command line argument.");
     process.exit(1);
   }
-
+// Get the cumulative fees from the github proof file.
   const cumulativeFeeShares = await getCumulativeFeeShares(nodeOperatorID);
-  if (cumulativeFeeShares) {
-    console.log(`Cumulative Fee Shares:`, cumulativeFeeShares);
-  }
-  const bondShares = await getBondShares(nodeOperatorID);
-  if (bondShares) {
-    console.log(`Total Bond Shares:`, bondShares);
-  }
+
+  //console.log(`Cumulative Fee Shares:`, cumulativeFeeShares);
+  const totalRewardsEth = await getPooledEthShares(cumulativeFeeShares.cumulativeFeeShares);
+  console.log(`Total Eth Rewards:`, totalRewardsEth);
+
+  // const claimableBondShares = await getClaimableBondShares(nodeOperatorID);
+  // console.log(`Total Claimable Bond Shares:`, claimableBondShares);
+
+  const distributedEth = await getDistributedShares(nodeOperatorID);
+  console.log(`Total Distributed Eth:`, distributedEth ?? 0);
+
+  const totalBondEth = await getTotalBond(nodeOperatorID);
+  console.log(`Total Bond Eth:`, totalBondEth);
+
+
 }
 
 // Call the main function
