@@ -17,8 +17,7 @@ const rewardsProofFile = process.env.REWARDS_PROOF_FILE;
 const proofUrl = githubUrl + rewardsProofFile;
 
 // Main function to handle the logic
-async function main() {
-  const nodeOperatorID = process.argv[2];
+async function csmrewards(nodeOperatorID) {
   if (!nodeOperatorID) {
     console.error("Please provide a nodeOperatorID as a command line argument.");
     process.exit(1);
@@ -42,5 +41,19 @@ async function main() {
 
 }
 
-// Call the main function
-main();
+// Export the functions
+module.exports = {
+  csmrewards,
+  getPooledEthShares,
+  getDistributedShares,
+  getTotalBond
+};
+
+// If the script is run directly, call the csmrewards function with the command line argument
+if (require.main === module) {
+  const nodeOperatorID = process.argv[2];
+  csmrewards(nodeOperatorID).catch(error => {
+    console.error(error);
+    process.exit(1);
+  });
+}
