@@ -5,6 +5,7 @@ const { getCumulativeFeeShares } = require("./lib/getCumulativeFeeShares");
 const { getDistributedShares } = require("./lib/getDistributedShares");
 const { getPooledEthShares } = require("./lib/getPooledEthShares");
 const { getTotalBond } = require("./lib/getTotalBond");
+const { getRequiredBond } = require("./lib/getRequiredBond");
 const { getClaimableBondShares } = require("./lib/getClaimableBondShares");
 const getEtherscanData = require("./lib/getEtherscanData");
 
@@ -38,7 +39,7 @@ async function csmrewards(nodeOperatorID) {
   const totalBondEth = await getTotalBond(nodeOperatorID);
   console.log(`Total Bond Eth:`, totalBondEth);
 
-
+  await getRequiredBond(nodeOperatorID);
 }
 
 // Export the functions
