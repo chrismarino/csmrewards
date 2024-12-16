@@ -23,7 +23,8 @@ const getExcessBondShares = async (nodeOperatorID) => {
   const moduleContractAddress = process.env.CSMODULE_CONTRACT_ADDRESS
   
   // Load the ABI from the JSON file
-  const accountingAbiPath = path.resolve(process.cwd(), 'interfaces/CSAccounting.json');
+
+  const accountingAbiPath = path.resolve(process.cwd(), "interfaces/CSAccounting.json");
   const accountingAbi = JSON.parse(fs.readFileSync(accountingAbiPath, 'utf8'));
 
 

@@ -10,7 +10,7 @@ const getRequiredBond = async (nodeOperatorID) => {
   const contractAddress = process.env.CSACCOUNTING_CONTRACT_ADDRESS;
 
   // Load the ABI from the JSON file
-  const abiPath = path.resolve(__dirname, "../interfaces/ICSBondCurve.json");
+  const abiPath = path.resolve(process.cwd(), "interfaces/CSAccounting.json");
   const contractABI = JSON.parse(fs.readFileSync(abiPath, "utf8")).abi;
 
   // Create a provider instance using the provided example
